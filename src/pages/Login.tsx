@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { saveEmail } from '../redux/actions';
+import { UserType } from '../types';
 
 const INITIAL_STATE = {
   email: '',
@@ -9,7 +10,7 @@ const INITIAL_STATE = {
 };
 
 function Login() {
-  const [login, setLogin] = useState(INITIAL_STATE);
+  const [login, setLogin] = useState<UserType>(INITIAL_STATE);
   const [disableBtn, setDisableBtn] = useState(true);
   const { email, password } = login;
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ function Login() {
     }
   };
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(saveEmail(email));
     navigate('/carteira');
