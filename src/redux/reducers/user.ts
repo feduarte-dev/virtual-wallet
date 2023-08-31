@@ -1,10 +1,8 @@
 import { AnyAction } from 'redux';
-import { UserType } from '../../types';
 import { SAVE_EMAIL } from '../actions';
 
-const INITIAL_STATE: UserType = {
+const INITIAL_STATE = {
   email: '',
-
 };
 
 const user = (state = INITIAL_STATE, action: AnyAction) => {
