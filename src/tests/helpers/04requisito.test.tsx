@@ -29,3 +29,28 @@ describe('Testando Home', () => {
     });
   });
 });
+
+describe('Testando WalletForm', () => {
+  test('Verifica funcionalidade de adicionar e remover despesas', async () => {
+    renderWithRouterAndRedux(<App />, { initialEntries: ['/carteira'] });
+
+    const valueInput = screen.getByTestId('value-input');
+    const descriptionInput = screen.getByTestId('description-input');
+    const addBtn = screen.getByRole('button', {
+      name: /adicionar despesa/i,
+    });
+    await userEvent.type(valueInput, '10');
+    await userEvent.type(descriptionInput, 'Coxinha');
+    await userEvent.click(addBtn);
+    const delBtn = screen.getByRole('button', {
+      name: /excluir/i,
+    });
+    await waitFor(() => {
+      expect(delBtn).toBeInTheDocument();
+    });
+    await userEvent.click(delBtn);
+    await waitFor(() => {
+      expect(delBtn).not.toBeInTheDocument();
+    });
+  });
+});

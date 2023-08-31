@@ -54,13 +54,16 @@ function Table() {
               Real
             </td>
             <td>
-              <button>Editar</button>
+              <button
+                data-testid="edit-btn"
+              >
+                Editar
+              </button>
               <button
                 onClick={ () => handleDelete(expense.id) }
                 data-testid="delete-btn"
               >
                 Excluir
-
               </button>
             </td>
           </tr>))}
