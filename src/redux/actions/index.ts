@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import currencyAPI from '../../services/currencyAPI';
+import { currencyAPI } from '../../services/currencyAPI';
 import { ExpenseType } from '../../types';
 
 export const SAVE_EMAIL = 'SAVE_EMAIL';
