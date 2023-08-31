@@ -26,7 +26,7 @@ function WalletForm() {
 
   useEffect(() => {
     dispatch(fetchCurrrencyAPI());
-  }, []);
+  }, [dispatch]);
 
   const handleExpenses = ({ target: { name, value } }
   :React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
