@@ -5,6 +5,7 @@ import { ExpenseType } from '../../types';
 export const SAVE_EMAIL = 'SAVE_EMAIL';
 export const RECEIVE_CURRENCY = 'RECEIVE_CURRENCY';
 export const SAVE_EXPENSES = 'SAVE_EXPENSES';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const saveEmail = (email: string) => ({
   type: SAVE_EMAIL,
@@ -31,6 +32,11 @@ export const fetchCurrrencyAPI = () => {
     }
   };
 };
+
+export const deleteExpense = (id: any) => ({
+  type: DELETE_EXPENSE,
+  payload: id,
+});
 
 export const fetchExchangeRates = (expenses: any) => {
   return async (dispatch: Dispatch) => {

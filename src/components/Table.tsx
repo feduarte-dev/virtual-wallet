@@ -1,8 +1,14 @@
-import { useSelector } from 'react-redux';
-import { GlobalStateType, ExpenseType } from '../types';
+import { useSelector, useDispatch } from 'react-redux';
+import { GlobalStateType, ExpenseType, AppDispatch } from '../types';
+import { deleteExpense } from '../redux/actions';
 
 function Table() {
   const expenses = useSelector((state: GlobalStateType) => state.wallet.expenses);
+  const dispatch: AppDispatch = useDispatch();
+
+  const handleDelete = (id: any) => {
+    dispatch(deleteExpense(id));
+  };
 
   return (
     <table>
@@ -48,8 +54,14 @@ function Table() {
               Real
             </td>
             <td>
-              <button>Excluir</button>
               <button>Editar</button>
+              <button
+                onClick={ () => handleDelete(expense.id) }
+                data-testid="delete-btn"
+              >
+                Excluir
+
+              </button>
             </td>
           </tr>))}
       </tbody>
