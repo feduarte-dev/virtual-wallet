@@ -19,9 +19,17 @@ function Header() {
   };
 
   return (
-    <div>
-      <h3 data-testid="email-field">{email}</h3>
-      <h3 data-testid="total-field">{sumExpenses().toFixed(2)}</h3>
+    <div className="header-container">
+      <h3 data-testid="email-field">
+        Email:
+        {' '}
+        {email}
+      </h3>
+      <h3 data-testid="total-field">
+        Total: R$
+        {sumExpenses().toFixed(2)}
+
+      </h3>
       <h3 data-testid="header-currency-field">BRL</h3>
     </div>
   );

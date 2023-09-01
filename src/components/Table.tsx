@@ -1,6 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { GlobalStateType, ExpenseType, AppDispatch } from '../types';
 import { deleteExpense, editExpense } from '../redux/actions';
+import pencil from '../assets/pencil.svg';
+import trash from '../assets/trash.svg';
 
 function Table() {
   const expenses = useSelector((state: GlobalStateType) => state.wallet.expenses);
@@ -15,7 +17,7 @@ function Table() {
   };
 
   return (
-    <table>
+    <table className="table-container">
       <thead>
         <tr>
           <th>Descrição</th>
@@ -59,16 +61,18 @@ function Table() {
               </td>
               <td>
                 <button
+                  className="edit-btn"
                   onClick={ () => handleEdit(id) }
                   data-testid="edit-btn"
                 >
-                  Editar
+                  <img src={ pencil } alt="edit-expense" />
                 </button>
                 <button
+                  className="delete-btn"
                   onClick={ () => handleDelete(id) }
                   data-testid="delete-btn"
                 >
-                  Excluir
+                  <img src={ trash } alt="delete-expense" />
                 </button>
               </td>
             </tr>

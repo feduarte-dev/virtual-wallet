@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { saveEmail } from '../redux/actions';
 import { UserType } from '../types';
+import './login.css';
 
 const INITIAL_STATE = {
   email: '',
@@ -34,34 +35,37 @@ function Login() {
   };
 
   return (
-    <form onSubmit={ (event) => handleSubmit(event) }>
-      <label htmlFor="email">
-        {'Email: '}
-        <input
-          value={ email }
-          onChange={ handleLogin }
-          type="email"
-          name="email"
-          data-testid="email-input"
-        />
-      </label>
-      <label htmlFor="password">
-        {'Senha: '}
-        <input
-          value={ password }
-          onChange={ handleLogin }
-          type="password"
-          name="password"
-          data-testid="password-input"
-        />
-      </label>
-      <button
-        type="submit"
-        disabled={ disableBtn }
-      >
-        Entrar
-      </button>
-    </form>
+    <div className="login-container">
+      <form className="login-form" onSubmit={ (event) => handleSubmit(event) }>
+        <label className="email-label" htmlFor="email">
+          {'Email: '}
+          <input
+            value={ email }
+            onChange={ handleLogin }
+            type="email"
+            name="email"
+            data-testid="email-input"
+          />
+        </label>
+        <label className="password-label" htmlFor="password">
+          {'Senha: '}
+          <input
+            value={ password }
+            onChange={ handleLogin }
+            type="password"
+            name="password"
+            data-testid="password-input"
+          />
+        </label>
+        <button
+          className="login-button"
+          type="submit"
+          disabled={ disableBtn }
+        >
+          Entrar
+        </button>
+      </form>
+    </div>
   );
 }
 

@@ -1,0 +1,70 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    }
+
+.login-form {
+    margin: 0 10%;
+    padding: 50px 30px;
+    border: 2px solid black;
+    border-radius: 20px;
+    background-color: #FFA559;
+    display: flex;
+    flex-direction: column
+}
+
+.email-label, .password-label {
+    padding: 3px;
+    font-size: larger;
+    background-color: #FFA559;
+}
+
+.email-label input, .password-label input {
+    width: 100%;
+    height: 24px;
+    border-radius: 5px;
+}
+
+.login-button {
+    margin: auto;
+    margin-top: 5px;
+    width: 98%;
+    height: 30px;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    overflow: hidden;
+    border-radius: 5px;
+    border: none;
+    background-color: #FF6000
+  }
+.login-button:hover {
+    border-radius: 5px;
+    padding-right: 24px;
+    padding-left:8px;
+  }
+.login-button:hover:after {
+    opacity: 1;
+    right: 10px;
+  }
+.login-button:after {
+    content: "\00BB";
+    position: absolute;
+    opacity: 0;
+    font-size: 20px;
+    line-height: 20px;
+    top: 0;
+    right: -20px;
+    transition: 0.4s;
+  }
+
+.login-button:disabled {
+  background-color: #b2a094
+}

@@ -62,7 +62,7 @@ function WalletForm() {
   };
 
   return (
-    <form onSubmit={ (event) => handleSubmit(event) }>
+    <form className="expenses-container" onSubmit={ (event) => handleSubmit(event) }>
       <label htmlFor="valor">
         {'Valor: '}
         <input
@@ -121,7 +121,7 @@ function WalletForm() {
       </select>
       {editor
         ? <button type="submit">Editar despesa</button>
-        : <button type="submit">Adicionar despesa</button>}
+        : <button className="add-expense" type="submit">Adicionar despesa</button>}
     </form>
   );
 }
