@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCurrrencyAPI, fetchExchangeRates } from '../redux/actions';
+import { fetchCurrrencyAPI, fetchExchangeRates, EditExpenseDone } from '../redux/actions';
 import { GlobalStateType, AppDispatch, ExpenseType } from '../types';
 
 const INITIAL_STATE = {
@@ -14,13 +14,12 @@ const INITIAL_STATE = {
 };
 
 function WalletForm() {
-  const [expenses, setExpenses] = useState<ExpenseType>(INITIAL_STATE);
+  const [expensesValues, setExpensesValues] = useState<ExpenseType>(INITIAL_STATE);
   const [expenseID, setExpenseID] = useState<number>(0);
 
   const rootState = useSelector((state: GlobalStateType) => state);
   const ID = useSelector((state: GlobalStateType) => state.wallet.expenses.length);
-
-  const currencyArray = rootState.wallet.currencies;
+  const { editor, currencies, editingExpenseId, expenses } = rootState.wallet;
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -31,18 +30,35 @@ function WalletForm() {
   const handleExpenses = ({ target: { name, value } }
   :React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const expenseInput = {
-      ...expenses,
+      ...expensesValues,
       [name]: value,
       id: expenseID,
     };
     setExpenseID(ID);
-    setExpenses(expenseInput);
+    setExpensesValues(expenseInput);
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(fetchExchangeRates(expenses));
-    setExpenses(INITIAL_STATE);
+    if (editor) {
+      const updatedExpenses = expenses
+        .map((expense: ExpenseType) => (expense.id === editingExpenseId
+          ? {
+            ...expense,
+            ...expensesValues,
+            id: editingExpenseId,
+            exchangeRates: expense.exchangeRates,
+          }
+          : expense));
+      dispatch(EditExpenseDone(updatedExpenses));
+    } else {
+      try {
+        await dispatch(fetchExchangeRates(expensesValues));
+        setExpensesValues(INITIAL_STATE);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (
@@ -51,7 +67,7 @@ function WalletForm() {
         {'Valor: '}
         <input
           onChange={ handleExpenses }
-          value={ expenses.value }
+          value={ expensesValues.value }
           name="value"
           data-testid="value-input"
           type="text"
@@ -64,16 +80,16 @@ function WalletForm() {
           type="text"
           name="description"
           onChange={ handleExpenses }
-          value={ expenses.description }
+          value={ expensesValues.description }
         />
       </label>
       <select
         data-testid="currency-input"
         name="currency"
         onChange={ handleExpenses }
-        value={ expenses.currency }
+        value={ expensesValues.currency }
       >
-        {currencyArray.map((currency) => (
+        {currencies.map((currency) => (
           <option
             key={ currency }
             value={ currency }
@@ -83,7 +99,7 @@ function WalletForm() {
       </select>
       <select
         onChange={ handleExpenses }
-        value={ expenses.method }
+        value={ expensesValues.method }
         data-testid="method-input"
         name="method"
       >
@@ -95,7 +111,7 @@ function WalletForm() {
         data-testid="tag-input"
         name="tag"
         onChange={ handleExpenses }
-        value={ expenses.tag }
+        value={ expensesValues.tag }
       >
         <option value="Alimentação">Alimentação</option>
         <option value="Lazer">Lazer</option>
@@ -103,11 +119,9 @@ function WalletForm() {
         <option value="Transporte">Transporte</option>
         <option value="Saúde">Saúde</option>
       </select>
-      <button
-        type="submit"
-      >
-        Adicionar despesa
-      </button>
+      {editor
+        ? <button type="submit">Editar despesa</button>
+        : <button type="submit">Adicionar despesa</button>}
     </form>
   );
 }

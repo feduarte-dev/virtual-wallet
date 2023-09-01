@@ -11,23 +11,20 @@ const INITIAL_STATE = {
 
 function Login() {
   const [login, setLogin] = useState<UserType>(INITIAL_STATE);
-  const [disableBtn, setDisableBtn] = useState(true);
+  const [disableBtn, setDisableBtn] = useState<boolean>(true);
   const { email, password } = login;
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleLogin = ({ target: { name, value } }:any) => {
+  const handleLogin = ({ target: { name, value } }
+  :React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const loginData = {
       ...login,
       [name]: value,
     };
     setLogin(loginData);
-
-    if (password.length > 4 && email.match(/^\S+@\S+\.\S+$/)) {
-      setDisableBtn(false);
-    } else {
-      setDisableBtn(true);
-    }
+    return password.length > 4 && email.match(/^\S+@\S+\.\S+$/)
+      ? setDisableBtn(false) : setDisableBtn(true);
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {

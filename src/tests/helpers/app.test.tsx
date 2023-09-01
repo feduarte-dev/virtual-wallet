@@ -53,4 +53,34 @@ describe('Testando WalletForm', () => {
       expect(delBtn).not.toBeInTheDocument();
     });
   });
+
+  test('Verifica funcionalidade de editar despesas', async () => {
+    renderWithRouterAndRedux(<App />, { initialEntries: ['/carteira'] });
+
+    const valueInput = screen.getByTestId('value-input');
+    const descriptionInput = screen.getByTestId('description-input');
+    const addBtn = screen.getByRole('button', {
+      name: /adicionar despesa/i,
+    });
+    await userEvent.type(valueInput, '10');
+    await userEvent.type(descriptionInput, 'Coxinha');
+    await userEvent.click(addBtn);
+    const editBtn = screen.getByTestId('edit-btn');
+    await waitFor(() => {
+      expect(editBtn).toBeInTheDocument();
+    });
+    await userEvent.click(editBtn);
+    await userEvent.type(valueInput, '20');
+    await userEvent.type(descriptionInput, 'Cachorro Quente');
+    const finishEdit = screen.getByRole('button', {
+      name: /editar despesa/i,
+    });
+    await userEvent.click(finishEdit);
+    const newValue = screen.getByRole('cell', {
+      name: /20\.00/i,
+    });
+    await waitFor(() => {
+      expect(newValue).toBeInTheDocument();
+    });
+  });
 });

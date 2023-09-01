@@ -6,6 +6,8 @@ export const SAVE_EMAIL = 'SAVE_EMAIL';
 export const RECEIVE_CURRENCY = 'RECEIVE_CURRENCY';
 export const SAVE_EXPENSES = 'SAVE_EXPENSES';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const EDIT_EXPENSE_DONE = 'EDIT_EXPENSE_DONE';
 
 export const saveEmail = (email: string) => ({
   type: SAVE_EMAIL,
@@ -33,12 +35,12 @@ export const fetchCurrrencyAPI = () => {
   };
 };
 
-export const deleteExpense = (id: any) => ({
+export const deleteExpense = (id: number) => ({
   type: DELETE_EXPENSE,
   payload: id,
 });
 
-export const fetchExchangeRates = (expenses: any) => {
+export const fetchExchangeRates = (expenses: ExpenseType[] | any) => {
   return async (dispatch: Dispatch) => {
     try {
       dispatch(saveExpenses({ ...expenses, exchangeRates: await currencyAPI() }));
@@ -47,3 +49,13 @@ export const fetchExchangeRates = (expenses: any) => {
     }
   };
 };
+
+export const editExpense = (id: number) => ({
+  type: EDIT_EXPENSE,
+  payload: id,
+});
+
+export const EditExpenseDone = (editedExpenses: ExpenseType[]) => ({
+  type: EDIT_EXPENSE_DONE,
+  payload: editedExpenses,
+});

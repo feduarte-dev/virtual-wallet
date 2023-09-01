@@ -11,8 +11,9 @@ export type GlobalStateType = {
   wallet: {
     currencies: []
     expenses: []
+    editor: boolean
+    editingExpenseId: number
   }
-  expenses:[]
 };
 
 export type ExpenseType = {
